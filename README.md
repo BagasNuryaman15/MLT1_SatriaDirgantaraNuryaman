@@ -59,40 +59,55 @@ Crop Recommendation Dataset ini sudah bersih, tidak ditemukan missing values pad
   <img src="img/Distribusi_Label.png" alt="Distribusi Label"/>
 </div>
 
-Berdasarkan visualisasi di atas, dapat disimpulkan bahwa dataset terdiri dari **22 jenis tanaman** dengan jumlah sampel yang sangat merata, yaitu **100 data untuk setiap kategori**. Tidak ada kelas yang mendominasi secara signifikan bahkan kategori terbesar, *rice*, hanya mencakup sekitar **4,5%** dari total data.
+Berdasarkan visualisasi di atas, dapat disimpulkan bahwa: 
+- Dataset terdiri dari **22 jenis tanaman** dengan jumlah sampel yang sangat merata, yaitu **100 data untuk setiap kategori**. 
+- Tidak ada kelas yang mendominasi secara signifikan bahkan kategori terbesar, *rice*, hanya mencakup sekitar **4,5%** dari total data.
 
 Kondisi distribusi yang seimbang seperti ini sangat ideal untuk pemodelan klasifikasi. Dengan tidak adanya masalah ketidakseimbangan data (_imbalance_), model yang dibangun tidak akan bias terhadap kelas tertentu. Hal ini juga memastikan bahwa evaluasi performa model menjadi lebih adil dan hasil prediksi yang dihasilkan akan representatif untuk seluruh kelas tanaman yang ada di dataset.
+
+### Distribusi Fitur Numerik
+<div align="center">
+  <img src="img/Distribusi_Fitur_Numerik.png" alt="Distribusi Fitur Numerik"/>
+</div>
+
+Di dapatkan bahwa distribusi fitur numerik dalam dataset menunjukkan pola yang beragam: 
+- Nitrogen (N) dan Potassium (K) memiliki nilai mean yang jauh lebih tinggi dari median, menandakan distribusi miring ke kanan (right-skewed) 
+- sedangkan humidity menunjukkan kemiringan ke kiri (left-skewed) karena median lebih tinggi dari mean. 
+- Fitur temperature dan ph cenderung simetris dengan selisih mean dan median yang kecil, mengindikasikan distribusi mendekati normal. 
+- Rainfall juga menunjukkan kemiringan ke kanan, mencerminkan keberadaan nilai nilai ekstrem yang tinggi.
 
 #### Korelasi Fitur
 <div align="center">
   <img src="img/correlation_matrix.png" alt="Heatmap Korelasi Fitur"/>
 </div>
 
-Analisis korelasi menunjukkan hanya ada satu hubungan yang sangat kuat, yaitu antara **Phosphorus (P)** dan **Potassium (K)** (nilai korelasi 0,74). Hal ini wajar karena kedua unsur ini sering diberikan bersamaan dalam pupuk NPK. Korelasi tinggi ini perlu diperhatikan saat pemodelan, karena bisa menyebabkan redundansi fitur. Oleh karena itu, teknik seperti feature selection atau reduksi dimensi dapat dipertimbangkan agar model tetap optimal.
+Analisis korelasi menunjukkan hanya ada satu hubungan yang sangat kuat: 
+- **Phosphorus (P)** dan **Potassium (K)** (nilai korelasi 0,74). Hal ini wajar karena kedua unsur ini sering diberikan bersamaan dalam pupuk NPK. 
+
+Korelasi tinggi ini perlu diperhatikan saat pemodelan, karena bisa menyebabkan redundansi fitur. Oleh karena itu, teknik seperti feature selection atau reduksi dimensi dapat dipertimbangkan agar model tetap optimal.
 
 #### Distribusi Fitur Numerik Berdasarkan Label
 <div align="center">
   <img src="img/Distribusi_Fitur_Numerik_Berdasarkan_Label.png" alt="Distribusi Fitur Numerik Berdasarkan Label"/>
 </div>
 
-Berdasarkan visualisasi, terlihat bahwa beberapa fitur numerik seperti **Nitrogen (N)**, **Phosphorus (P)**, **Potassium (K)**, dan **temperature** memiliki perbedaan mencolok antar kelas tanaman. Misalnya, *cotton* cenderung memiliki nilai N tinggi, *maize* tinggi pada P, *rice* pada K, dan *orange* pada suhu. Variasi ini menjadi sinyal utama bagi model dalam membedakan jenis tanaman, sehingga keempat fitur tersebut sangat penting untuk diprioritaskan dalam proses pemilihan fitur.
+Berdasarkan visualisasi: 
+- Terlihat bahwa beberapa fitur numerik seperti **Nitrogen (N)**, **Phosphorus (P)**, **Potassium (K)**, dan **temperature** memiliki perbedaan mencolok antar kelas tanaman. Misalnya, *cotton* cenderung memiliki nilai N tinggi, *maize* tinggi pada P, *rice* pada K, dan *orange* pada suhu. 
+
+Variasi ini menjadi sinyal utama bagi model dalam membedakan jenis tanaman, sehingga keempat fitur tersebut sangat penting untuk diprioritaskan dalam proses pemilihan fitur.
 
 #### Key Feature Relationships
 <div align="center">
   <img src="img/key_feature_relationships.png" alt="Scatterplot Key Feature Relationships"/>
 </div>
 
-Scatterplot menunjukkan bahwa kombinasi fitur **Phosphorus (P)**, **Potassium (K)**, **Nitrogen (N)**, dan **temperature** membentuk pola pemisahan yang jelas antar tanaman. Misalnya, *apple*, *banana*, dan *rice* menempati zona berbeda pada P vs K, sedangkan *cotton* dan *orange* terpisah pada N vs temperature. Hal ini menegaskan bahwa keempat fitur tersebut sangat efektif dalam membantu model membedakan jenis tanaman secara akurat.
+Dari Scatterplot menunjukkan bahwa: 
+- Kombinasi fitur **Phosphorus (P)**, **Potassium (K)**, **Nitrogen (N)**, dan **temperature** membentuk pola pemisahan yang jelas antar tanaman. Misalnya, *apple*, *banana*, dan *rice* menempati zona berbeda pada P vs K, sedangkan *cotton* dan *orange* terpisah pada N vs temperature. 
+
+Hal ini menegaskan bahwa keempat fitur tersebut sangat efektif dalam membantu model membedakan jenis tanaman secara akurat.
 
 ## Data Preparation 🧹
 Di Data Preparation ini, kita tidak terlalu banyak melakukan penanganan, dikarenakan dataset ini sudah bersih, tidak ada missing values, dan juga tidak ada duplikasi data. Namun ada proses yang dilakukan pada tahap ini, yaitu:
-
-### Penanganan Outlier
-<div align="center">
-  <img src="img/Boxplot_Histogram_Fitur_Numerik.png" alt="Boxplot dan Histogram Fitur Numerik"/>
-</div>
-
-Dari visualisasi boxplot, tampak bahwa fitur seperti **Phosphorus (P)**, **Potassium (K)**, **temperature**, **ph**, dan **rainfall** memiliki nilai nilai ekstrem yang keluar dari pola umum. Namun, ketika ditelusuri lebih dalam lewat histogram, outlier outlier ini justru mencerminkan keragaman alami dari kondisi tanah dan iklim di berbagai wilayah bukan kesalahan atau anomali data. Karena itu, outlier tidak dihapus agar model bisa belajar langsung dari dinamika nyata di lapangan. Keberagaman ini justru menjadi kekuatan dalam membentuk model yang adaptif dan kontekstual.
 
 ### Train Test Split
 Pada tahap ini, dataset dibagi menjadi dua bagian utama:
@@ -112,11 +127,15 @@ Seluruh fitur numerik dinormalisasi menggunakan **StandardScaler** agar setiap f
 
 ## Modeling 🧠
 
-### Algoritma yang Digunakan
+Pada tahap ini, dilakukan pengembangan model machine learning untuk klasifikasi rekomendasi tanaman menggunakan tiga algoritma berbeda yang dipilih berdasarkan karakteristik data dan kompleksitas masalah.
 
-Pada proyek ini, digunakan tiga algoritma machine learning untuk menyelesaikan permasalahan klasifikasi rekomendasi tanaman:
+### Model yang Digunakan
 
-#### 1. **K-Nearest Neighbors (KNN)**
+#### Model 1: K-Nearest Neighbors (KNN)
+
+**Cara Kerja**  
+KNN mengklasifikasikan data baru berdasarkan mayoritas kelas dari k tetangga terdekat di data training.
+
 **Kelebihan:**
 - Sederhana dan mudah dipahami
 - Tidak memerlukan asumsi distribusi data
@@ -127,7 +146,11 @@ Pada proyek ini, digunakan tiga algoritma machine learning untuk menyelesaikan p
 - Komputasi lambat pada dataset besar
 - Rentan terhadap curse of dimensionality
 
-#### 2. **Random Forest**
+#### Model 2: Random Forest
+
+**Cara Kerja**  
+Random Forest membangun multiple decision trees dan menggabungkan hasilnya melalui voting. Setiap tree dilatih pada subset data berbeda dengan subset fitur acak pada setiap split.
+
 **Kelebihan:**
 - Menangani overfitting dengan baik melalui ensemble
 - Dapat menangani fitur numerik dan kategorikal
@@ -139,7 +162,11 @@ Pada proyek ini, digunakan tiga algoritma machine learning untuk menyelesaikan p
 - Memerlukan memory yang lebih besar
 - Cenderung bias pada fitur dengan banyak kategori
 
-#### 3. **XGBoost**
+#### Model 3: XGBoost
+
+**Cara Kerja**  
+XGBoost membangun model secara sekuensial dimana setiap model baru memperbaiki kesalahan dari model sebelumnya dengan mengoptimalkan gradient dari loss function.
+
 **Kelebihan:**
 - Performa tinggi dengan optimasi gradient boosting
 - Built-in regularization untuk mencegah overfitting
@@ -151,44 +178,54 @@ Pada proyek ini, digunakan tiga algoritma machine learning untuk menyelesaikan p
 - Waktu training lebih lama
 - Rentan overfitting jika tidak dikonfigurasi dengan benar
 
-### Hyperparameter Tuning 
+### Hyperparameter Tuning
 
-Untuk mendapatkan performa optimal, dilakukan **GridSearchCV** pada setiap algoritma dengan parameter berikut:
+Untuk mendapatkan performa optimal, dilakukan **GridSearchCV** dengan 5-fold cross-validation pada setiap algoritma. Grid search membantu menemukan kombinasi hyperparameter terbaik dengan menguji semua kemungkinan kombinasi dari parameter yang telah ditentukan.
 
-**KNN:**
-- `n_neighbors`: [3, 5, 7, 9, 11]
-- `weights`: ['uniform', 'distance']
-- `metric`: ['euclidean', 'manhattan']
+### Parameter yang Dituning dan Alasan Pemilihannya:
 
-**Random Forest:**
-- `n_estimators`: [50, 100, 200]
-- `max_depth`: [10, 20, None]
-- `min_samples_split`: [2, 5, 10]
-- `min_samples_leaf`: [1, 2, 4]
+#### a. K-Nearest Neighbors (KNN):
+- **`n_neighbors`**: Jumlah tetangga terdekat yang digunakan untuk klasifikasi
+- **`weights`**: Metode pemberian bobot pada tetangga (uniform atau berdasarkan jarak)
+- **`metric`**: Jenis metrik jarak yang digunakan untuk mengukur kedekatan
+- **Alasan**: Parameter `n_neighbors` sangat mempengaruhi bias-variance tradeoff. `weights='distance'` memberikan bobot lebih pada tetangga yang lebih dekat, sedangkan pilihan metrik jarak dapat disesuaikan dengan karakteristik data untuk hasil optimal.
 
-**XGBoost:**
-- `n_estimators`: [50, 100, 200]
-- `max_depth`: [3, 6, 10]
-- `learning_rate`: [0.01, 0.1, 0.2]
-- `subsample`: [0.8, 1.0]
+#### b. Random Forest Classifier:
+- **`n_estimators`**: Jumlah pohon keputusan dalam ensemble
+- **`max_depth`**: Kedalaman maksimum setiap pohon untuk mencegah overfitting
+- **`min_samples_split`**: Jumlah minimum sampel yang diperlukan untuk membagi node
+- **`min_samples_leaf`**: Jumlah minimum sampel yang harus ada di setiap leaf node
+- **Alasan**: Tuning `n_estimators` meningkatkan akurasi dengan menambah diversitas pohon. `max_depth` dan parameter sampel mengontrol kompleksitas model agar tidak overfitting sambil mempertahankan kemampuan generalisasi.
 
-### Hasil dan Pemilihan Model Terbaik
+#### c. XGBoost Classifier:
+- **`n_estimators`**: Jumlah boosting rounds (pohon yang dibangun secara sekuensial)
+- **`max_depth`**: Kedalaman maksimum pohon untuk mengontrol kompleksitas
+- **`learning_rate`**: Tingkat pembelajaran yang mengontrol kontribusi setiap pohon
+- **`subsample`**: Rasio sampel data yang digunakan untuk melatih setiap pohon
+- **Alasan**: `learning_rate` mengontrol seberapa cepat model belajar untuk mencegah overfitting. `subsample` menambah regularisasi dengan menggunakan subset data, sementara `max_depth` menjaga agar setiap pohon tidak terlalu kompleks.
 
-Setelah proses tuning, diperoleh hasil evaluasi sebagai berikut:
+**Parameter Grid yang Digunakan:**
 
-| Model                 | CV Score  | Test Accuracy | Overfitting |
-|-----------------------|-----------|---------------|-------------|
-| Random Forest         | 0.9960    | 0.9955        | 0.0006      |
-| XGBoost               | 0.9915    | 0.9886        | 0.0028      |
-| KNN                   | 0.9812    | 0.9818        | 0.0006      |
+| Model                           | Parameter Grid                                                                                                                     |
+|-------------------------------- |------------------------------------------------------------------------------------------------------------------------------------|
+| **K-NeighborsClassifier**       | `n_neighbors`: [3, 5, 7, 9, 11]<br>`weights`: ['uniform', 'distance']<br>`metric`: ['euclidean', 'manhattan']                      |
+| **Random Forest Classifier**    | `n_estimators`: [50, 100, 200]<br>`max_depth`: [10, 20, None]<br>`min_samples_split`: [2, 5, 10]<br>`min_samples_leaf`: [1, 2, 4]  |
+| **XGBoost Classifier**          | `n_estimators`: [50, 100, 200]<br>`max_depth`: [3, 6, 10]<br>`learning_rate`: [0.01, 0.1, 0.2]<br>`subsample`: [0.8, 1.0]          |
 
-**Random Forest dipilih sebagai model terbaik** karena:
+### Hasil Hyperparameter Tuning
 
-1. **Akurasi tertinggi**: Test accuracy 99.55% menunjukkan performa superior
-2. **Stabilitas terbaik**: Overfitting terendah (0.0006) menandakan generalisasi yang sangat baik
-3. **Konsistensi**: Selisih antara CV score dan test accuracy paling kecil
-4. **Feature importance**: Memberikan insight yang valuable tentang fitur fitur penting
-5. **Robustness**: Tahan terhadap outlier yang ada dalam dataset
+| Model                         | Best Parameters                                                           |
+|-------------------------------|---------------------------------------------------------------------------|
+| **K-Neighbors Classifier**    | `metric=manhattan, n_neighbors=5, weights=distance`                       |
+| **Random Forest Classifier**  | `max_depth=10, min_samples_leaf=1, min_samples_split=5, n_estimators=100` |
+| **XGBoost Classifier**        | `learning_rate=0.1, max_depth=3, n_estimators=200, subsample=0.8`         |
+
+**Insight dari Hyperparameter Tuning:**
+- **KNN** optimal dengan Manhattan distance dan weighted voting, menunjukkan pentingnya jarak dan bobot dalam klasifikasi
+- **Random Forest** dengan 100 trees dan kedalaman terbatas (10) memberikan keseimbangan antara akurasi dan generalisasi
+- **XGBoost** dengan learning rate moderat (0.1) dan subsample 0.8 mencegah overfitting sambil mempertahankan performa tinggi
+
+Ketiga model menunjukkan CV Score yang sangat tinggi (>98%), membuktikan bahwa dataset memiliki pola yang jelas dan dapat dipelajari dengan baik oleh berbagai algoritma machine learning.
 
 ### Analisis Feature Importance
 <div align="center">
@@ -302,13 +339,13 @@ Cross-validation 5-fold untuk mengukur konsistensi performa dan mendeteksi overf
 
 Berdasarkan semua metrik evaluasi yang digunakan, model **Random Forest** menunjukkan performa yang sangat baik:
 
-| Aspek | Hasil | Status |
-|-------|-------|--------|
-| **Akurasi** | 99.55% | ✅ Sangat Tinggi |
-| **Generalisasi** | Overfitting 0.0006 | ✅ Excellent |
-| **Konsistensi** | Semua metrik >99% | ✅ Optimal |
-| **Bias** | Performa merata semua kelas | ✅ Tidak Bias |
-| **Confidence** | Keyakinan >95% | ✅ Sangat Tinggi |
+| Aspek             | Hasil                       | Status            |
+|-------------------|-----------------------------|-------------------|
+| **Akurasi**       | 99.55%                      | ✅ Sangat Tinggi  |
+| **Generalisasi**  | Overfitting 0.0006          | ✅ Excellent      |
+| **Konsistensi**   | Semua metrik >99%           | ✅ Optimal        |
+| **Bias**          | Performa merata semua kelas | ✅ Tidak Bias     |
+| **Confidence**    | Keyakinan >95%              | ✅ Sangat Tinggi  |
 
 **Rekomendasi:** Model Random Forest sangat layak untuk diimplementasikan dalam sistem rekomendasi tanaman nyata dan dapat membantu petani dalam pengambilan keputusan berdasarkan kondisi tanah dan iklim yang tersedia.
 
