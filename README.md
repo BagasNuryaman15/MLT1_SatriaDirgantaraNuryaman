@@ -8,6 +8,11 @@ Namun, petani sering menghadapi tantangan dalam menentukan jenis tanaman yang pa
 
 Seiring berkembangnya teknologi, pemanfaatan data dan kecerdasan buatan (Artificial Intelligence) menjadi solusi potensial untuk mengoptimalkan proses pengambilan keputusan di bidang pertanian. Dengan memanfaatkan data lingkungan dan karakteristik tanah, sistem rekomendasi berbasis machine learning dapat membantu petani memilih jenis tanaman yang paling optimal, sehingga meningkatkan hasil panen, efisiensi penggunaan lahan, dan keberlanjutan pertanian ([Sharma et al., 2020](https://ieeexplore.ieee.org/document/9121234)).
 
+**Referensi:**
+[1] Badan Pusat Statistik (BPS), "Produk Domestik Bruto Menurut Lapangan Usaha," 2023. [Online]. Available: https://www.bps.go.id/id/statistics-table/2/NjMjMg==/produk-domestik-bruto-menurut-lapangan-usaha.html  
+[2] Food and Agriculture Organization (FAO), "The State of Food and Agriculture 2021," 2021. [Online]. Available: https://www.fao.org/3/cb4476en/cb4476en.pdf  
+[3] A. Sharma, N. Kumar, and S. Singh, "Crop Recommendation System Using Machine Learning Approach," in 2020 International Conference on Smart Electronics and Communication (ICOSEC), pp. 1178-1183, IEEE, 2020. [Online]. Available: https://ieeexplore.ieee.org/document/9121234  
+
 ## Business Understanding 🗒️
 
 ### Problem Statements 🤖
@@ -67,7 +72,7 @@ Kondisi distribusi yang seimbang seperti ini sangat ideal untuk pemodelan klasif
 
 ### Distribusi Fitur Numerik
 <div align="center">
-  <img src="img/Distribusi_Fitur_Numerik.png" alt="Distribusi Fitur Numerik"/>
+  <img src="img/histogram_fitur_numerik.png" alt="Distribusi Fitur Numerik"/>
 </div>
 
 Di dapatkan bahwa distribusi fitur numerik dalam dataset menunjukkan pola yang beragam: 
